@@ -35,4 +35,16 @@ def criar():
     return redirect('/')
 
 
+@app.route('/login')
+def login():
+    return render_template('login.html', titulo='Faça o seu login')
+
+
+@app.route('/autenticar', methods=['POST',])
+def autenticar():
+    if 'password' == request.form['senha']:
+        return redirect('/')
+    else:
+        return redirect('/login')
+
 app.run(debug=True)
