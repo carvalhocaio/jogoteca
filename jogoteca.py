@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, flash
+from flask.globals import session
 
 app = Flask(__name__)
+app.secret_key = 'Pa$$w0rd2021'
 
 
 class Jogo:
@@ -8,6 +10,7 @@ class Jogo:
         self.nome = nome
         self.categoria = categoria
         self.console = console
+
 
 jogo1 = Jogo('Super Mario', 'Ação', 'SNES')
 jogo2 = Jogo('Pokemon Gold', 'RPG', 'GBA')
@@ -25,7 +28,7 @@ def novo():
     return render_template('novo.html', titulo='Novo Jogo')
 
 
-@app.route('/criar', methods=['POST',])
+@app.route('/criar', methods=['POST', ])
 def criar():
     nome = request.form['nome']
     categoria = request.form['categoria']
@@ -40,11 +43,15 @@ def login():
     return render_template('login.html', titulo='Faça o seu login')
 
 
-@app.route('/autenticar', methods=['POST',])
+@app.route('/autenticar', methods=['POST', ])
 def autenticar():
     if 'password' == request.form['senha']:
+        session['usuario_logado'] = request.form['usuario']
+        flash(request.form['usuario'] + ' logou com sucesso!')
         return redirect('/')
     else:
+        flash('Não logado, tente novamente!')
         return redirect('/login')
+
 
 app.run(debug=True)
