@@ -26,7 +26,7 @@ def index():
 @app.route('/novo')
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login')
+        return redirect('/login?proxima=novo')
     return render_template('novo.html', titulo='Novo Jogo')
 
 
@@ -42,7 +42,8 @@ def criar():
 
 @app.route('/login')
 def login():
-    return render_template('login.html', titulo='Faça o seu login')
+    proxima = request.args.get('proxima')
+    return render_template('login.html', proxima=proxima, titulo='Faça o seu login')
 
 
 @app.route('/autenticar', methods=['POST', ])
@@ -50,7 +51,8 @@ def autenticar():
     if 'password' == request.form['senha']:
         session['usuario_logado'] = request.form['usuario']
         flash(request.form['usuario'] + ' logou com sucesso!')
-        return redirect('/')
+        proxima_pagina = request.form['proxima']
+        return redirect(f'/{proxima_pagina}')
     else:
         flash('Não logado, tente novamente!')
         return redirect('/login')
