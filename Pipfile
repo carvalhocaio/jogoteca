@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+astroid = "*"
+autopep8 = "*"
+click = "*"
+Flask = "*"
+isort = "*"
+itsdangerous = "*"
+Jinja2 = "*"
+lazy-object-proxy = "*"
+MarkupSafe = "*"
+mccabe = "*"
+pycodestyle = "*"
+pylint = "*"
+six = "*"
+toml = "*"
+Werkzeug = "*"
+wrapt = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
