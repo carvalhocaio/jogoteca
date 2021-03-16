@@ -11,7 +11,7 @@ from flask import (
 from flask.globals import session
 from flask_mysqldb import MySQL
 from models import Jogo, Usuario
-from dao import JogoDao
+from dao import JogoDao, UsuarioDao
 
 
 app = Flask(__name__)
@@ -25,26 +25,12 @@ app.config['MYSQL_PORT'] = 3306
 
 db = MySQL(app)
 jogo_dao = JogoDao(db)
-
-usuario1 = Usuario('caio', 'Caio Carvalho', 'hopes')
-usuario2 = Usuario('nico', 'Nico Steppat', '1234')
-usuario3 = Usuario('robin', 'Robin Scherbatsky', 'canada')
-
-usuarios = {
-    usuario1.id: usuario1,
-    usuario2.id: usuario2,
-    usuario3.id: usuario3
-}
-
-
-jogo1 = Jogo('Super Mario', 'Ação', 'SNES')
-jogo2 = Jogo('Pokemon Gold', 'RPG', 'GBA')
-jogo3 = Jogo('Mortal Kombat', 'Luya', 'SNES')
-lista = [jogo1, jogo2, jogo3]
+usuario_dao = UsuarioDao(db)
 
 
 @app.route('/')
 def index():
+    lista = jogo_dao.listar()
     return render_template('lista.html', titulo='Jogos', jogos=lista)
 
 
@@ -73,8 +59,8 @@ def login():
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
-    if request.form['usuario'] in usuarios:
-        usuario = usuarios[request.form['usuario']]
+    usuario = usuario_dao.buscar_por_id(request.form['usuario'])
+    if usuario:
         if usuario.senha == request.form['senha']:
             session['usuario_logado'] = usuario.id
             flash(usuario.nome + ' logou com sucesso!')
