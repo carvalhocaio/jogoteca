@@ -21,6 +21,8 @@ toml = "*"
 Werkzeug = "*"
 wrapt = "*"
 flask-mysqldb = "==0.2.0"
+python-decouple = "*"
+python-dotenv = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -1,23 +1,30 @@
-from flask import Flask, render_template, request, redirect, session, flash, url_for
+from decouple import config
+from flask import (
+    Flask,
+    flash,
+    url_for,
+    session,
+    request,
+    redirect,
+    render_template,
+)
 from flask.globals import session
+from flask_mysqldb import MySQL
+from models import Jogo, Usuario
+from dao import JogoDao
+
 
 app = Flask(__name__)
-app.secret_key = 'Pa$$w0rd2021'
+app.secret_key = config('SECRET_KEY')
 
+app.config['MYSQL_HOST'] = config('MYSQL_HOST')
+app.config['MYSQL_USER'] = config('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = config('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = config('MYSQL_DB')
+app.config['MYSQL_PORT'] = 3306
 
-class Jogo:
-    def __init__(self, nome, categoria, console):
-        self.nome = nome
-        self.categoria = categoria
-        self.console = console
-
-
-class Usuario:
-    def __init__(self, id, nome, senha):
-        self.id = id
-        self.nome = nome
-        self.senha = senha
-
+db = MySQL(app)
+jogo_dao = JogoDao(db)
 
 usuario1 = Usuario('caio', 'Caio Carvalho', 'hopes')
 usuario2 = Usuario('nico', 'Nico Steppat', '1234')
@@ -54,7 +61,7 @@ def criar():
     categoria = request.form['categoria']
     console = request.form['console']
     jogo = Jogo(nome, categoria, console)
-    lista.append(jogo)
+    jogo_dao.salvar(jogo)
     return redirect(url_for('index'))
 
 
@@ -85,4 +92,5 @@ def logout():
     return redirect(url_for('index'))
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run()

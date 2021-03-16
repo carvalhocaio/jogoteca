@@ -1,11 +1,17 @@
+from decouple import config
 import MySQLdb
+
 print('Conectando...')
-conn = MySQLdb.connect(user='root', passwd='Pa$$w0rd',
-                       host='127.0.0.1', port=3306)
+conn = MySQLdb.connect(
+    user=config('MYSQL_USER'),
+    passwd=config('MYSQL_PASSWORD'),
+    host=config('MYSQL_HOST'),
+    port=3306
+)
 
 # Descomente se quiser desfazer o banco...
-# conn.cursor().execute("DROP DATABASE `jogoteca`;")
-# conn.commit()
+conn.cursor().execute("DROP DATABASE `jogoteca`;")
+conn.commit()
 
 criar_tabelas = '''SET NAMES utf8;
     CREATE DATABASE `jogoteca` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
@@ -33,7 +39,8 @@ cursor.executemany(
     [
         ('luan', 'Luan Marques', 'flask'),
         ('nico', 'Nico', '7a1'),
-        ('danilo', 'Danilo', 'vegas')
+        ('danilo', 'Danilo', 'vegas'),
+        ('caio', 'Caio Carvalho', 'hopes')
     ])
 
 cursor.execute('select * from jogoteca.usuario')
