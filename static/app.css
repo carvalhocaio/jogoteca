@@ -1,22 +1,3 @@
-body {
-    padding-top: 10px;
-}
-
-.btn {
-    margin-bottom: 10px;
-}
-
-.container {
-    border-radius: 4px;
-    margin: auto;
-    width: 80%;
-}
-
-.little-container {
-    width: 40%;
-    margin: auto;
-}
-
 figcaption {
     text-align: center;
     margin: 3px auto;
@@ -41,6 +22,3 @@ figcaption {
     top: 0;
 }
 
-td {
-    text-align: center;
-}

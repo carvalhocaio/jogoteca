@@ -1,11 +1,12 @@
 {% extends "template.html" %}
 {% block conteudo %}
+
 <form action="{{ url_for('atualizar') }}" method="post" enctype="multipart/form-data">
-  <figure class="thumb col-md-3">    
-    <img class="img-responsive" src="{{ url_for('imagem', nome_arquivo=capa_jogo) }}">
+  <figure class="thumb col-md-4">    
     <figcaption>
+      <img class="img-responsive" src="{{ url_for('imagem', nome_arquivo=capa_jogo) }}">
       <label class="fileContainer">
-        Mudar Capa
+        <span style="margin-top: 10px;" class="btn-lg btn-primary btn-block">Mudar Capa</span>
         <input type="file" name="arquivo" accept=".jpg">
       </label>
     </figcaption>
@@ -25,7 +26,8 @@
       <label for="console">Console</label>
       <input type="text" id="console" name="console" class="form-control" value="{{ jogo.console }}">
     </div>
-    <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a class="btn btn-danger" href="{{ url_for('index') }}">Voltar</a>
   </fieldset>
 </form>
 {% endblock %}
