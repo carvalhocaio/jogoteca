@@ -9,7 +9,7 @@ Development mode shows an interactive debugger whenever a page raises an excepti
 ```
 $ export FLASK_APP=jogoteca
 $ export FLASK_ENV=development
-$ export DEBUG=True
+$ export FLASK_DEBUG=True
 $ flask run
 
 ```
